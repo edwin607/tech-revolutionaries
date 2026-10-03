@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech Revolutionaries — Field Notes of a Movement</title>
+<meta name="description" content="A manifesto written by hand, because the human hand is the first technology worth protecting. Humanist technology for good — scalable, accessible, for all.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Gochi+Hand&family=Permanent+Marker&family=Special+Elite&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TECH REVOLUTIONARIES — the notebook is the protest
+   The medium is the message: hand-written ink on ruled paper,
+   fighting back against the cold monospace of the machine.
+   ============================================================ */
+
+:root{
+  --paper:        #f6f1e3;
+  --paper-deep:   #efe7d3;
+  --paper-shadow: #e4dcc6;
+  --ink:          #1c2440;   /* blue-black ballpoint */
+  --ink-soft:     #3a4470;
+  --ink-faint:    rgba(28,36,64,.55);
+  --red:          #c0392b;   /* margin red / teacher's pen */
+  --red-soft:     rgba(192,57,43,.75);
+  --rule-blue:    rgba(93,135,190,.34);
+  --margin-red:   rgba(220,90,80,.45);
+  --machine:      #0e0e10;   /* the machine voice */
+  --highlight:    rgba(255,214,90,.45);
+  --tape:         rgba(235,225,195,.85);
+  --font-hand:    'Caveat', cursive;
+  --font-hand2:   'Gochi Hand', cursive;
+  --font-marker:  'Permanent Marker', cursive;
+  --font-type:    'Special Elite', 'Courier New', monospace;
+  --font-mono:    'Space Mono', monospace;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; overflow-x:hidden; }
+html,body{ overscroll-behavior-y:none; }
+
+body{
+  background:#2a2620;
+  color:var(--ink);
+  font-family:var(--font-hand);
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+
+::selection{ background:var(--highlight); color:var(--ink); }
+
+/* ---------- desk backdrop ---------- */
+.desk{
+  position:fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(1200px 800px at 50% -10%, #4a4238 0%, #332d26 55%, #241f1a 100%);
+}
+.desk::after{
+  content:""; position:absolute; inset:0; opacity:.5; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- the page ---------- */
+.page{
+  position:relative; z-index:1;
+  max-width:1060px;
+  margin:clamp(12px,3vw,44px) auto clamp(60px,10vh,120px);
+  background:
+    /* ruled lines */
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--leading) - 1px),
+      var(--rule-blue) calc(var(--leading) - 1px),
+      var(--rule-blue) var(--leading)
+    ),
+    /* paper tone */
+    linear-gradient(105deg, var(--paper) 0%, #f8f4e9 40%, var(--paper) 70%, var(--paper-deep) 100%);
+  --leading:44px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 30px 80px -20px rgba(0,0,0,.75),
+    0 8px 24px rgba(0,0,0,.5);
+  padding:calc(var(--leading)*1.2) clamp(20px,5vw,72px) calc(var(--leading)*2) clamp(84px,11vw,132px);
+  transform:rotate(-.35deg);
+}
+/* paper fibre noise */
+.page::before{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.55; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .93 0 0 0 0 .90 0 0 0 0 .82 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+/* red margin line */
+.page::after{
+  content:""; position:absolute; top:0; bottom:0;
+  left:clamp(58px,7.5vw,92px); width:2px;
+  background:var(--margin-red); pointer-events:none;
+}
+
+/* spiral holes */
+.holes{ position:absolute; top:0; bottom:0; left:18px; width:26px; pointer-events:none; z-index:2; }
+.hole{
+  position:absolute; left:0; width:24px; height:24px; border-radius:50%;
+  background:radial-gradient(circle at 38% 32%, #17130f 0 42%, #000 62%, rgba(0,0,0,.55) 70%, transparent 72%);
+  box-shadow:0 0 0 3px rgba(0,0,0,.08), inset 0 2px 4px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.5);
+}
+.hole::after{ /* torn ring */
+  content:""; position:absolute; inset:-4px; border-radius:50%;
+  border:2px dashed rgba(28,36,64,.12);
+}
+
+/* dog-ear */
+.dogear{
+  position:absolute; top:0; right:0; width:0; height:0; z-index:3;
+  border-style:solid; border-width:0 64px 64px 0;
+  border-color:transparent #2a2620 transparent transparent;
+  filter:drop-shadow(-4px 4px 6px rgba(0,0,0,.25));
+}
+.dogear::after{
+  content:""; position:absolute; top:0; right:-64px; width:0; height:0;
+  border-style:solid; border-width:0 58px 58px 0;
+  border-color:transparent var(--paper-shadow) transparent transparent;
+}
+
+/* ---------- ink cursor trail canvas ---------- */
+#inkTrail{ position:fixed; inset:0; z-index:50; pointer-events:none; }
+
+/* ---------- typography ---------- */
+.kicker{
+  font-family:var(--font-type); font-size:12px; letter-spacing:.35em;
+  text-transform:uppercase; color:var(--ink-faint);
+}
+h1,h2,h3{ font-weight:700; }
+.hand{ font-family:var(--font-hand); }
+.hand2{ font-family:var(--font-hand2); }
+.marker{ font-family:var(--font-marker); }
+.type{ font-family:var(--font-type); }
+.mono{ font-family:var(--font-mono); }
+
+p{ font-size:clamp(22px,2.6vw,30px); line-height:var(--leading); color:var(--ink); }
+.lead{ font-size:clamp(26px,3.2vw,38px); }
+
+/* machine voice — cold, monospace, slightly wrong on the page */
+.machine-voice{
+  font-family:var(--font-mono); font-size:.62em; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase;
+  color:#101014; background:rgba(16,16,20,.06);
+  padding:.1em .35em; border:1px solid rgba(16,16,20,.25);
+  white-space:nowrap; position:relative;
+}
+
+/* ---------- hand-drawn SVG annotations ---------- */
+.anno{ position:relative; display:inline-block; }
+.anno svg{
+  position:absolute; left:-4%; top:-18%; width:108%; height:136%;
+  overflow:visible; pointer-events:none;
+}
+.anno svg path, .anno svg ellipse, .anno svg circle, .anno svg line{
+  fill:none !important; stroke:var(--red); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
+}
+.num svg ellipse, .subtitle-box svg path, .doodle-arrow path, .arrow-svg path, .tear svg path{
+  fill:none !important;
+}
+.anno.ink-anno svg path, .anno.ink-anno svg ellipse{ stroke:var(--ink); }
+
+/* draw-on animation */
+.draw path, .draw ellipse, .draw circle, .draw line{
+  stroke-dasharray:var(--len,600); stroke-dashoffset:var(--len,600);
+}
+.drawn path, .drawn ellipse, .drawn circle, .drawn line{
+  animation:drawIn var(--dur,1.1s) cubic-bezier(.6,.05,.3,1) forwards;
+  animation-delay:var(--delay,0s);
+}
+@keyframes drawIn{ to{ stroke-dashoffset:0; } }
+
+/* underline that grows */
+.u-line{ position:relative; white-space:nowrap; }
+.u-line > i{
+  position:absolute; left:-2%; right:-2%; bottom:-.12em; height:.22em; font-style:normal;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 Q 20 2 40 5 T 78 5 T 118 4' fill='none' stroke='%23c0392b' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  transform:scaleX(0); transform-origin:left center;
+  transition:transform 1s cubic-bezier(.6,.05,.2,1) .15s;
+}
+.on .u-line > i, .u-line.on > i{ transform:scaleX(1); }
+
+/* strikethrough — the cross-outs from the notes */
+.strike{ position:relative; }
+.strike > i{
+  position:absolute; left:-3%; right:-3%; top:52%; height:.16em; font-style:normal;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 Q 30 2 60 4 T 118 3' fill='none' stroke='%231c2440' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  transform:scaleX(0); transform-origin:left center;
+  transition:transform .55s cubic-bezier(.7,0,.3,1);
+}
+.strike.struck > i{ transform:scaleX(1); }
+
+/* highlighter */
+.hl{
+  background:linear-gradient(100deg, transparent .5%, var(--highlight) 3%, var(--highlight) 97%, transparent 99.5%);
+  padding:0 .12em; box-decoration-break:clone; -webkit-box-decoration-break:clone;
+}
+
+/* circled number badges (like the ①②③④ in the notes) */
+.num{
+  position:relative; display:inline-grid; place-items:center;
+  width:1.35em; height:1.35em; margin-right:.4em;
+  font-family:var(--font-hand); font-weight:700; font-size:.85em; color:var(--ink);
+  vertical-align:-.12em;
+}
+.num svg{ position:absolute; inset:-16%; width:132%; height:132%; overflow:visible; }
+.num svg ellipse{ stroke:var(--ink); stroke-width:3.2; fill:none !important; }
+
+/* margin scribbles */
+.margin-note{
+  position:absolute; left:34px;
+  width:52px; max-width:52px;
+  font-family:var(--font-hand2); font-size:12.5px; line-height:1.1;
+  color:var(--ink-soft); transform:rotate(-5deg); text-align:center;
+  z-index:3; overflow:hidden;
+}
+.margin-note.red{ color:var(--red-soft); transform:rotate(4deg); }
+@media (min-width:900px){
+  .margin-note{ left:44px; width:64px; max-width:64px; font-size:14px; }
+}
+@media (max-width:760px){ .margin-note{ display:none; } }
+
+/* ---------- sections ---------- */
+section{ position:relative; margin:calc(var(--leading)*1.1) 0; }
+.rule-break{
+  border:0; height:2px; margin:calc(var(--leading)*.9) 0;
+  background:linear-gradient(90deg, transparent, var(--ink-faint) 8%, var(--ink-faint) 92%, transparent);
+  opacity:.5;
+}
+
+/* header */
+.masthead{ padding-top:calc(var(--leading)*.4); }
+.masthead .kicker{ display:block; margin-bottom:calc(var(--leading)*.35); }
+.title{
+  font-family:var(--font-marker);
+  font-size:clamp(40px,7.2vw,88px);
+  line-height:.98; letter-spacing:.01em; color:var(--ink);
+  transform:rotate(-.6deg);
+}
+@media (max-width:560px){
+  .title{ font-size:clamp(26px,8.2vw,40px); letter-spacing:0; }
+}
+.title .rev{ position:relative; display:inline-block; }
+.subtitle-box{
+  display:inline-block; margin-top:calc(var(--leading)*.4);
+  padding:.1em .6em .18em; position:relative;
+  font-family:var(--font-hand); font-weight:600;
+  font-size:clamp(26px,3.6vw,44px); color:var(--ink);
+  transform:rotate(.4deg);
+}
+.subtitle-box svg{ position:absolute; inset:-12% -4%; width:108%; height:124%; overflow:visible; }
+.subtitle-box svg path{ stroke:var(--ink); stroke-width:3.5; }
+
+/* hero intro */
+.intro{ margin-top:calc(var(--leading)*.8); }
+.intro .lead{ max-width:34ch; }
+.intro .who{
+  font-family:var(--font-marker); color:var(--red);
+  font-size:1.06em; padding:0 .08em;
+}
+
+/* purpose arrow */
+.purpose-flow{ display:flex; flex-wrap:wrap; align-items:center; gap:.2em .5em; }
+.arrow-svg{ width:clamp(48px,6vw,84px); height:auto; overflow:visible; }
+.arrow-svg path{ stroke:var(--ink); stroke-width:3.4; }
+
+/* landscape chips */
+.landscape{ display:grid; gap:calc(var(--leading)*.55); }
+.land-group{ position:relative; padding-left:clamp(0px,2vw,26px); }
+.land-label{
+  font-family:var(--font-hand2); font-size:clamp(17px,2vw,22px);
+  color:var(--ink-soft); transform:rotate(-.5deg); display:block; margin-bottom:.15em;
+}
+.chips{ display:flex; flex-wrap:wrap; gap:.4em .6em; }
+.chip{
+  font-family:var(--font-hand); font-weight:600;
+  font-size:clamp(21px,2.5vw,29px); color:var(--ink);
+  padding:0 .3em; position:relative; cursor:crosshair;
+  transition:transform .25s cubic-bezier(.3,1.6,.5,1);
+}
+.chip:hover{ transform:rotate(-2deg) scale(1.06); }
+.chip.machine-voice:hover{ transform:rotate(1.5deg) scale(1.04); background:rgba(16,16,20,.12); }
+
+/* the frontier callout */
+.frontier{
+  margin:calc(var(--leading)*.4) 0 0;
+  padding:calc(var(--leading)*.35) clamp(14px,2.5vw,30px);
+  border:2.5px solid var(--ink); border-radius:3px;
+  position:relative; transform:rotate(-.4deg);
+  background:rgba(255,255,255,.28);
+  box-shadow:4px 5px 0 rgba(28,36,64,.16);
+}
+.frontier .kicker{ color:var(--red); }
+.frontier .ai-word{
+  font-family:var(--font-marker); font-size:clamp(40px,6vw,72px);
+  color:var(--ink); display:inline-block; position:relative;
+}
+
+/* definition block — the heart */
+.defn{
+  position:relative;
+  padding:calc(var(--leading)*.4) clamp(16px,3vw,36px);
+  background:linear-gradient(180deg, rgba(255,252,240,.6), rgba(255,250,235,.25));
+  border-left:3px solid var(--red-soft);
+}
+.defn p{ margin:.35em 0; }
+.defn .big{ font-size:clamp(28px,3.6vw,42px); font-weight:700; }
+
+/* threats & promise */
+.threats{ display:grid; grid-template-columns:1fr 1fr; gap:calc(var(--leading)*.6) clamp(20px,4vw,56px); }
+@media (max-width:760px){ .threats{ grid-template-columns:1fr; } }
+.threat-card h3{ font-size:clamp(26px,3vw,36px); margin-bottom:.2em; }
+.threat-card ul{ list-style:none; }
+.threat-card li{
+  font-size:clamp(22px,2.6vw,30px); line-height:var(--leading);
+  padding-left:1.2em; position:relative;
+}
+.threat-card li::before{ content:"✕"; position:absolute; left:0; color:var(--red); font-family:var(--font-hand); font-weight:700; }
+.promise-card li::before{ content:"✦"; color:var(--ink); }
+.threat{ cursor:crosshair; }
+.threat .strike > i{ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 Q 30 2 60 4 T 118 3' fill='none' stroke='%23c0392b' stroke-width='3.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
+
+/* shaky BIG TECH — the scribble that won't sit still */
+.shake{ display:inline-block; animation:jit 3.2s steps(2) infinite; }
+@keyframes jit{
+  0%,88%,100%{ transform:translate(0,0) rotate(0); }
+  90%{ transform:translate(-1px,1px) rotate(-.6deg); }
+  92%{ transform:translate(1px,-1px) rotate(.5deg); }
+  94%{ transform:translate(-1px,-1px) rotate(-.4deg); }
+  96%{ transform:translate(1px,1px) rotate(.6deg); }
+}
+
+/* glitch zone — AI risk paragraph where the machine fights the hand */
+.glitch-zone{ position:relative; }
+.glitchable{ position:relative; display:inline-block; }
+.glitching{ animation:glitch .32s steps(3) 1; }
+@keyframes glitch{
+  0%{ transform:translate(0); clip-path:inset(0); }
+  20%{ transform:translate(-4px,2px) skewX(-4deg); clip-path:inset(12% 0 40% 0); }
+  40%{ transform:translate(4px,-2px) skewX(3deg); clip-path:inset(50% 0 8% 0); }
+  60%{ transform:translate(-3px,1px); clip-path:inset(0 0 0 0); opacity:.6; }
+  80%{ transform:translate(2px,2px) skewX(-2deg); }
+  100%{ transform:translate(0); }
+}
+
+/* ---------- tear divider ---------- */
+.tear{
+  position:relative; height:90px; margin:calc(var(--leading)*1.2) calc(-1 * clamp(20px,5vw,72px)) calc(var(--leading)*1.2) calc(-1 * clamp(84px,11vw,132px));
+  background:
+    linear-gradient(180deg, transparent 46%, rgba(0,0,0,.14) 50%, transparent 54%);
+}
+.tear svg{ position:absolute; inset:0; width:100%; height:100%; }
+
+/* ---------- call to action ---------- */
+.cta{ text-align:left; }
+.cta .join{
+  font-family:var(--font-marker); font-size:clamp(52px,9vw,120px);
+  color:var(--ink); transform:rotate(-1.2deg); display:inline-block; position:relative;
+}
+.roles{ display:flex; flex-wrap:wrap; gap:.45em .7em; margin-top:calc(var(--leading)*.4); }
+.role{
+  font-family:var(--font-hand); font-weight:600; font-size:clamp(22px,2.7vw,31px);
+  padding:.02em .5em .1em; border:2.5px solid var(--ink); border-radius:999px;
+  background:rgba(255,255,255,.35); cursor:crosshair; position:relative;
+  transition:transform .3s cubic-bezier(.3,1.8,.5,1), background .3s;
+  user-select:none;
+}
+.role:hover{ transform:rotate(-2deg) scale(1.07); background:var(--highlight); }
+.role.circled{ background:var(--highlight); }
+.role.circled::after{
+  content:""; position:absolute; inset:-9px -13px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 60' preserveAspectRatio='none'%3E%3Cellipse cx='60' cy='30' rx='56' ry='25' fill='none' stroke='%23c0392b' stroke-width='4' stroke-linecap='round' transform='rotate(-2 60 30)'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  animation:pop .35s cubic-bezier(.3,1.8,.5,1);
+  pointer-events:none;
+}
+@keyframes pop{ from{ transform:scale(.6); opacity:0; } to{ transform:scale(1); opacity:1; } }
+
+/* signature pad */
+.sig-wrap{ margin-top:calc(var(--leading)*.7); position:relative; }
+.sig-label{ font-family:var(--font-hand2); font-size:clamp(18px,2.2vw,24px); color:var(--ink-soft); }
+.sig-pad{
+  position:relative; margin-top:.4em; height:190px;
+  border-bottom:3px solid var(--ink);
+  background:linear-gradient(180deg, transparent 78%, rgba(28,36,64,.05) 100%);
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cpath d='M4 22 L20 4 L23 7 L7 23 L3 24 Z' fill='%231c2440'/%3E%3C/svg%3E") 2 24, crosshair;
+  touch-action:none;
+}
+.sig-pad svg{ position:absolute; inset:0; width:100%; height:100%; }
+.sig-x{ position:absolute; left:6px; bottom:8px; font-family:var(--font-marker); font-size:26px; color:var(--red); }
+.sig-count{ font-family:var(--font-hand2); font-size:19px; color:var(--ink-soft); margin-top:.5em; }
+.sig-count b{ color:var(--red); font-family:var(--font-hand); font-size:1.3em; }
+.sig-clear{
+  font-family:var(--font-hand2); font-size:16px; color:var(--ink-faint);
+  background:none; border:none; border-bottom:1.5px dashed var(--ink-faint);
+  cursor:pointer; margin-left:1em; padding:0;
+}
+.sig-clear:hover{ color:var(--red); border-color:var(--red); }
+
+/* subscribe strip */
+.subscribe{
+  margin-top:calc(var(--leading)*.8);
+  display:flex; flex-wrap:wrap; gap:.8em; align-items:center;
+  padding:calc(var(--leading)*.35) clamp(14px,2.5vw,28px);
+  background:var(--tape);
+  box-shadow:0 6px 18px rgba(0,0,0,.18), inset 0 0 40px rgba(120,100,60,.12);
+  transform:rotate(.5deg);
+  position:relative;
+}
+.subscribe::before, .subscribe::after{
+  content:""; position:absolute; top:-14px; width:96px; height:30px;
+  background:rgba(235,228,200,.75); box-shadow:0 2px 5px rgba(0,0,0,.15);
+  transform:rotate(-3deg); left:8%;
+}
+.subscribe::after{ left:auto; right:8%; transform:rotate(2.5deg); }
+.subscribe .type{ font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#5a5138; width:100%; }
+.subscribe input{
+  flex:1 1 240px; font-family:var(--font-hand); font-size:24px; color:var(--ink);
+  background:transparent; border:none; border-bottom:2.5px solid var(--ink-soft);
+  padding:.15em .2em; outline:none;
+}
+.subscribe input::placeholder{ color:var(--ink-faint); }
+.subscribe input:focus{ border-color:var(--red); }
+.subscribe button{
+  font-family:var(--font-marker); font-size:20px; color:var(--paper);
+  background:var(--ink); border:none; padding:.45em 1.2em .55em; cursor:pointer;
+  transform:rotate(-1deg); transition:transform .25s cubic-bezier(.3,1.8,.5,1), background .25s;
+}
+.subscribe button:hover{ transform:rotate(1deg) scale(1.05); background:var(--red); }
+
+/* footer */
+.colophon{
+  margin-top:calc(var(--leading)*1.1); display:flex; flex-wrap:wrap; gap:1em; align-items:baseline; justify-content:space-between;
+  font-family:var(--font-hand2); font-size:18px; color:var(--ink-faint);
+}
+.colophon .stamp{
+  font-family:var(--font-type); font-size:11px; letter-spacing:.3em; text-transform:uppercase;
+  border:2px solid var(--ink-faint); padding:.5em .9em; transform:rotate(-3deg); border-radius:2px;
+}
+
+/* reveal on scroll */
+.rise{ opacity:0; transform:translateY(26px) rotate(.3deg); transition:opacity .8s ease, transform .9s cubic-bezier(.2,.9,.3,1); }
+.rise.on{ opacity:1; transform:translateY(0) rotate(0); }
+
+/* wobbly arrow drawn between sections */
+.doodle-arrow{ display:block; margin:calc(var(--leading)*.2) auto 0; width:clamp(70px,9vw,120px); overflow:visible; }
+.doodle-arrow path{ stroke:var(--red); stroke-width:3.4; }
+
+/* reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.001s !important; transition-duration:.001s !important; }
+  html{ scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="desk"></div>
+<canvas id="inkTrail"></canvas>
+
+<div class="page" id="page">
+  <div class="holes" id="holes"></div>
+  <div class="dogear"></div>
+
+  <!-- ================= MASTHEAD ================= -->
+  <header class="masthead">
+    <span class="kicker rise">Field notes · Found in a notebook · Circa now</span>
+    <h1 class="title rise">
+      TECH<br>
+      <span class="rev anno" id="revWord">REVOLUTIONARIES
+        <svg viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true" style="top:auto; bottom:-22%; height:40%;">
+          <path class="u" d="M6 74 Q 120 60 260 68 T 590 62" style="--len:700"/>
+        </svg>
+      </span>
+    </h1>
+    <div class="subtitle-box rise">
+      Manifesto &amp; Movement
+      <svg viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M8 12 Q 200 2 392 10 Q 398 35 390 58 Q 200 68 10 60 Q 2 35 8 12 Z" style="--len:1300; --dur:1.4s"/>
+      </svg>
+    </div>
+    <span class="margin-note red" style="top:96px;">read this<br>first ↴</span>
+  </header>
+
+  <!-- ================= INTRO ================= -->
+  <section class="intro">
+    <p class="lead rise">
+      Technology is the most powerful force of our age. The question is no longer
+      <span class="strike" data-auto-strike>whether</span> it will reshape humanity — but
+      <span class="who anno" id="whoServe">who it will serve.
+        <svg viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true">
+          <ellipse cx="150" cy="34" rx="146" ry="29" transform="rotate(-1.5 150 34)" style="--len:900; --dur:1.2s; --delay:.3s"/>
+        </svg>
+      </span>
+    </p>
+    <svg class="doodle-arrow draw" viewBox="0 0 120 90" aria-hidden="true">
+      <path d="M60 6 Q 55 40 62 66 M 48 52 L 63 70 L 76 50" style="--len:220; --delay:.2s"/>
+    </svg>
+  </section>
+
+  <hr class="rule-break">
+
+  <!-- ================= 1 · PURPOSE ================= -->
+  <section id="purpose">
+    <span class="margin-note" style="top:calc(var(--leading)*-.62);">the whole<br>point ↴</span>
+    <h2 class="rise">
+      <span class="num">1<svg viewBox="0 0 60 60" aria-hidden="true"><ellipse cx="30" cy="30" rx="25" ry="27" transform="rotate(-6 30 30)" style="--len:200"/></svg></span>
+      Revolutionary <span class="u-line">practice<i></i></span> &amp; development of technology
+    </h2>
+    <p class="rise purpose-flow" style="margin-top:.3em;">
+      <span class="arrow-svg draw" style="width:clamp(48px,6vw,84px)">
+        <svg class="arrow-svg draw" viewBox="0 0 90 40" aria-hidden="true"><path d="M4 22 Q 40 14 74 20 M 62 10 L 78 20 L 60 30" style="--len:180"/></svg>
+      </span>
+      <span class="hl">Tech for good</span> &amp;
+      <span class="u-line">scalable &amp; accessible<i></i></span>
+      <span class="hand2" style="color:var(--red);">social impact.</span>
+    </p>
+  </section>
+
+  <hr class="rule-break">
+
+  <!-- ================= 2 · LANDSCAPE ================= -->
+  <section id="landscape">
+    <span class="margin-note red" style="top:calc(var(--leading)*-.62);">map the<br>terrain</span>
+    <h2 class="rise">
+      <span class="num">2<svg viewBox="0 0 60 60" aria-hidden="true"><ellipse cx="30" cy="30" rx="25" ry="27" transform="rotate(5 30 30)" style="--len:200"/></svg></span>
+      What does the technology <span class="u-line">revolution<i></i></span> look like?
+    </h2>
+    <p class="rise hand2" style="font-size:clamp(18px,2.1vw,24px); color:var(--ink-soft); margin:.2em 0 .6em;">— what is tech, really? a landscape:</p>
+
+    <div class="landscape">
+      <div class="land-group rise">
+        <span class="land-label">the digital layer —</span>
+        <div class="chips">
+          <span class="chip">Software</span><span class="chip">Apps</span><span class="chip">Internet-based</span><span class="chip">Digital</span>
+        </div>
+      </div>
+      <div class="land-group rise">
+        <span class="land-label">immersive &amp; decentralized —</span>
+        <div class="chips">
+          <span class="chip">AR</span><span class="chip">XR</span><span class="chip">VR</span><span class="chip">Web3</span><span class="chip">Blockchain</span><span class="chip">Crypto</span>
+        </div>
+      </div>
+      <div class="land-group rise">
+        <span class="land-label">the infrastructure nobody sees —</span>
+        <div class="chips">
+          <span class="chip machine-voice">finance</span>
+          <span class="chip machine-voice">property</span>
+          <span class="chip machine-voice">gov't tech</span>
+          <span class="chip machine-voice">industrial tech</span>
+          <span class="chip machine-voice shake">private / BIG TECH</span>
+        </div>
+      </div>
+      <div class="frontier rise">
+        <span class="kicker">⌖ the frontier</span><br>
+        <span class="ai-word anno" id="aiWord">Artificial Intelligence
+          <svg viewBox="0 0 560 90" preserveAspectRatio="none" aria-hidden="true">
+            <ellipse cx="280" cy="44" rx="272" ry="38" transform="rotate(-.8 280 44)" style="--len:1500; --dur:1.5s"/>
+          </svg>
+        </span>
+        <p class="hand2" style="font-size:clamp(17px,2vw,22px); color:var(--ink-soft); margin-top:.2em;">
+          the sharpest edge — and the one that cuts both ways.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEAR ================= -->
+  <div class="tear" aria-hidden="true">
+    <svg viewBox="0 0 1000 90" preserveAspectRatio="none">
+      <path d="M0 45 L 60 38 L 130 52 L 210 36 L 300 50 L 390 40 L 470 54 L 560 37 L 650 51 L 740 39 L 830 53 L 910 41 L 1000 47"
+            fill="none" stroke="rgba(28,36,64,.35)" stroke-width="2" stroke-dasharray="6 7"/>
+    </svg>
+  </div>
+
+  <!-- ================= 3 · DEFINITION ================= -->
+  <section id="definition">
+    <span class="margin-note" style="top:calc(var(--leading)*-.62);">← memorize<br>this part</span>
+    <h2 class="rise">
+      <span class="num">3<svg viewBox="0 0 60 60" aria-hidden="true"><ellipse cx="30" cy="30" rx="25" ry="27" transform="rotate(-4 30 30)" style="--len:200"/></svg></span>
+      What is a <span class="hl">Tech Revolutionary</span>?
+    </h2>
+    <div class="defn rise" style="margin-top:.5em;">
+      <p class="big">
+        People, organizations &amp; ideas in tech that are
+        <span class="anno" id="humanistCore">humanist at their core
+          <svg viewBox="0 0 420 70" preserveAspectRatio="none" aria-hidden="true">
+            <ellipse cx="210" cy="34" rx="204" ry="29" transform="rotate(-1 210 34)" style="--len:1200; --dur:1.3s"/>
+            <ellipse cx="210" cy="34" rx="196" ry="25" transform="rotate(1.2 210 34)" style="--len:1200; --dur:1.3s; --delay:.25s"/>
+          </svg>
+        </span> —
+      </p>
+      <p>
+        <span class="u-line">protecting<i></i></span> human life,
+        <span class="u-line">improving<i></i></span> human life, and shielding it as much as possible from
+        <span class="hand2" style="color:var(--red);">suffering, exploitation,</span>
+        subjugation to <span class="hand2" style="color:var(--red);">government ills,</span> and
+        <span class="strike" data-auto-strike>even</span> extinction —
+      </p>
+      <p class="big" style="margin-top:.3em;">
+        <span class="marker" style="color:var(--red);">especially</span> against
+        <span class="u-line">tech threats.<i></i></span>
+      </p>
+    </div>
+
+    <div class="threats" style="margin-top:calc(var(--leading)*.7);">
+      <div class="threat-card rise">
+        <h3><span style="color:var(--red);">⚠</span> Tech threats <span class="hand2" style="font-size:.55em; color:var(--ink-faint);">(hover to cross out)</span></h3>
+        <ul>
+          <li class="threat"><span class="strike" data-hover-strike>Unregulated private &amp; <b class="shake">Big Tech</b><i></i></span></li>
+          <li class="threat"><span class="strike" data-hover-strike><span class="glitchable" id="aiRisk">AI risk</span><i></i></span></li>
+        </ul>
+      </div>
+      <div class="threat-card promise-card rise">
+        <h3><span>✦</span> Tech promise</h3>
+        <ul>
+          <li><span class="hl">Access for all</span> —</li>
+          <li><span class="u-line">infinitely scalable.<i></i></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEAR 2 ================= -->
+  <div class="tear" aria-hidden="true">
+    <svg viewBox="0 0 1000 90" preserveAspectRatio="none">
+      <path d="M0 47 L 70 52 L 150 37 L 230 51 L 320 39 L 410 53 L 500 38 L 590 50 L 680 40 L 770 52 L 860 38 L 940 50 L 1000 44"
+            fill="none" stroke="rgba(28,36,64,.35)" stroke-width="2" stroke-dasharray="6 7"/>
+    </svg>
+  </div>
+
+  <!-- ================= 4 · CALL TO ACTION ================= -->
+  <section id="join" class="cta">
+    <span class="margin-note red" style="top:calc(var(--leading)*-.62);">do it<br>now !!</span>
+    <h2 class="rise">
+      <span class="num">4<svg viewBox="0 0 60 60" aria-hidden="true"><ellipse cx="30" cy="30" rx="25" ry="27" transform="rotate(7 30 30)" style="--len:200"/></svg></span>
+      Call to action
+    </h2>
+    <p class="rise" style="margin-top:.2em;">
+      <span class="join anno" id="joinUs">Join us.
+        <svg viewBox="0 0 320 130" preserveAspectRatio="none" aria-hidden="true" style="top:auto; bottom:-30%; height:46%;">
+          <path d="M10 100 Q 60 122 160 112 T 310 96" style="--len:500; --dur:1s; --delay:.2s"/>
+          <path d="M286 78 L 312 96 L 282 108" style="--len:80; --dur:.5s; --delay:1s"/>
+        </svg>
+      </span>
+    </p>
+    <p class="rise">The revolution needs builders and believers. If you want technology to serve humanity, <span class="hl">this is your movement</span> — circle who you are:</p>
+
+    <div class="roles rise" id="roles">
+      <span class="role">Volunteers</span>
+      <span class="role">Tech industry</span>
+      <span class="role">Technologists</span>
+      <span class="role">Inventors</span>
+      <span class="role">Social entrepreneurs</span>
+      <span class="role">Humanists</span>
+    </div>
+
+    <!-- signature -->
+    <div class="sig-wrap rise">
+      <span class="sig-label">Sign the page — draw your mark with the pen:</span>
+      <div class="sig-pad" id="sigPad">
+        <svg id="sigSvg" preserveAspectRatio="none"></svg>
+        <span class="sig-x">✕</span>
+      </div>
+      <div class="sig-count">
+        <b id="sigNum">1,207</b> hands have signed this page.
+        <button class="sig-clear" id="sigClear">erase &amp; start over</button>
+      </div>
+    </div>
+
+    <!-- subscribe -->
+    <form class="subscribe rise" id="subForm">
+      <span class="type">Stand with the movement — get updates, actions &amp; calls to build</span>
+      <input type="email" required placeholder="your email, written in ink…" aria-label="Email address">
+      <button type="submit">Count me in →</button>
+      <span class="hand2" id="subMsg" style="width:100%; color:var(--red); font-size:20px; display:none;">Noted. The hand that writes the future is yours. ✎</span>
+    </form>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="colophon">
+    <span>Tech Revolutionaries — <span style="color:var(--red);">humanist at the core.</span></span>
+    <span class="stamp">Written by hand · Because hands built this</span>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   INTERACTIONS — the page is alive, the ink is wet
+   ============================================================ */
+(function(){
+  'use strict';
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- spiral holes ---------- */
+  const holes = document.getElementById('holes');
+  const page  = document.getElementById('page');
+  function placeHoles(){
+    holes.innerHTML = '';
+    const h = page.offsetHeight;
+    const gap = 120;
+    for(let y = 70; y < h - 40; y += gap){
+      const d = document.createElement('div');
+      d.className = 'hole';
+      d.style.top = y + 'px';
+      holes.appendChild(d);
+    }
+  }
+  placeHoles();
+  addEventListener('resize', placeHoles);
+
+  /* ---------- measure SVG stroke lengths for draw-on ---------- */
+  document.querySelectorAll('.anno svg, .num svg, .doodle-arrow, .arrow-svg, .subtitle-box svg').forEach(svg=>{
+    svg.querySelectorAll('path, ellipse, circle, line').forEach(el=>{
+      try{
+        const len = el.getTotalLength();
+        el.style.setProperty('--len', Math.ceil(len * 1.15));
+        svg.classList.add('draw');
+      }catch(e){}
+    });
+  });
+
+  /* ---------- scroll reveal + trigger draw-on ---------- */
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(!en.isIntersecting) return;
+      const el = en.target;
+      el.classList.add('on');
+      // fire draw-on animations inside
+      el.querySelectorAll('.draw').forEach(s=> s.classList.add('drawn'));
+      if(el.classList.contains('draw')) el.classList.add('drawn');
+      // auto strikethroughs (the crossed-out words from the notes)
+      el.querySelectorAll('[data-auto-strike]').forEach((s,i)=>{
+        setTimeout(()=> s.classList.add('struck'), 700 + i*450);
+      });
+      io.unobserve(el);
+    });
+  }, { threshold:.35 });
+
+  document.querySelectorAll('.rise, .anno, .num').forEach(el=>{
+    if(el.classList.contains('rise')) io.observe(el);
+  });
+  // observe annotation hosts separately so circles draw even outside .rise
+  const io2 = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(!en.isIntersecting) return;
+      en.target.querySelectorAll('.draw').forEach(s=> s.classList.add('drawn'));
+      if(en.target.classList.contains('draw')) en.target.classList.add('drawn');
+      io2.unobserve(en.target);
+    });
+  }, { threshold:.5 });
+  document.querySelectorAll('.anno, .num, .doodle-arrow, .frontier, .subtitle-box').forEach(el=> io2.observe(el));
+
+  /* ---------- hover strikethrough: cross out the threats yourself ---------- */
+  document.querySelectorAll('[data-hover-strike]').forEach(el=>{
+    const parent = el.closest('.threat');
+    const arm = ()=> el.classList.add('struck');
+    const disarm = ()=> el.classList.remove('struck');
+    (parent || el).addEventListener('mouseenter', arm);
+    (parent || el).addEventListener('mouseleave', disarm);
+    (parent || el).addEventListener('click', ()=> el.classList.toggle('struck'));
+  });
+
+  /* ---------- AI risk glitch: the machine fights back ---------- */
+  const aiRisk = document.getElementById('aiRisk');
+  if(aiRisk && !reduceMotion){
+    setInterval(()=>{
+      if(Math.random() < .4){
+        aiRisk.classList.remove('glitching');
+        void aiRisk.offsetWidth;
+        aiRisk.classList.add('glitching');
+      }
+    }, 3400);
+  }
+
+  /* ---------- role chips: circle who you are ---------- */
+  const roles = document.getElementById('roles');
+  let circled = 0;
+  roles.querySelectorAll('.role').forEach(r=>{
+    r.addEventListener('click', ()=>{
+      const was = r.classList.contains('circled');
+      r.classList.toggle('circled');
+      circled += was ? -1 : 1;
+      if(!was) bumpSignatures(1);
+    });
+  });
+
+  /* ---------- signature pad: wet ink ---------- */
+  const pad = document.getElementById('sigPad');
+  const svg = document.getElementById('sigSvg');
+  let drawing = false, last = null, signed = false;
+
+  function pt(e){
+    const r = pad.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    return [ (p.clientX - r.left) / r.width * 100, (p.clientY - r.top) / r.height * 100 ];
+  }
+  function start(e){ drawing = true; last = pt(e); signed = true; e.preventDefault(); }
+  function move(e){
+    if(!drawing) return;
+    const p = pt(e);
+    const line = document.createElementNS('http://www.w3.org/2000/svg','path');
+    const wob = ()=> (Math.random()-.5) * .7; // hand tremor
+    const mx = (last[0]+p[0])/2 + wob(), my = (last[1]+p[1])/2 + wob();
+    line.setAttribute('d', `M ${last[0]} ${last[1]} Q ${mx} ${my} ${p[0]} ${p[1]}`);
+    line.setAttribute('fill','none');
+    line.setAttribute('stroke','#1c2440');
+    line.setAttribute('stroke-width', (1.4 + Math.random()*1.6).toFixed(2));
+    line.setAttribute('stroke-linecap','round');
+    line.setAttribute('opacity', (.75 + Math.random()*.25).toFixed(2));
+    svg.appendChild(line);
+    last = p;
+    e.preventDefault();
+  }
+  function end(){
+    if(drawing && signed){ bumpSignatures(1); signed = false; }
+    drawing = false;
+  }
+  pad.addEventListener('mousedown', start);
+  addEventListener('mousemove', move);
+  addEventListener('mouseup', end);
+  pad.addEventListener('touchstart', start, {passive:false});
+  pad.addEventListener('touchmove', move, {passive:false});
+  pad.addEventListener('touchend', end);
+
+  document.getElementById('sigClear').addEventListener('click', ()=>{
+    svg.innerHTML = '';
+  });
+
+  /* signature counter — playful, persistent-ish */
+  const sigNum = document.getElementById('sigNum');
+  let count = 1207;
+  try{ count = parseInt(localStorage.getItem('tr-sig-count')) || 1207; }catch(e){}
+  renderCount();
+  function bumpSignatures(n){
+    count += n;
+    try{ localStorage.setItem('tr-sig-count', count); }catch(e){}
+    renderCount(true);
+  }
+  function renderCount(pop){
+    sigNum.textContent = count.toLocaleString();
+    if(pop && !reduceMotion){
+      sigNum.style.transition='none'; sigNum.style.transform='scale(1.35)'; sigNum.style.display='inline-block';
+      requestAnimationFrame(()=>{ sigNum.style.transition='transform .4s cubic-bezier(.3,1.8,.5,1)'; sigNum.style.transform='scale(1)'; });
+    }
+  }
+
+  /* ---------- subscribe ---------- */
+  document.getElementById('subForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    document.getElementById('subMsg').style.display = 'block';
+    e.target.querySelector('button').textContent = '✓ In the margins';
+    bumpSignatures(1);
+  });
+
+  /* ---------- ink cursor trail (desktop, subtle) ---------- */
+  const trail = document.getElementById('inkTrail');
+  const tctx = trail.getContext('2d');
+  let dots = [];
+  function sizeTrail(){ trail.width = innerWidth; trail.height = innerHeight; }
+  sizeTrail(); addEventListener('resize', sizeTrail);
+  let lastMove = 0;
+  addEventListener('mousemove', e=>{
+    const now = performance.now();
+    if(now - lastMove < 24) return;
+    lastMove = now;
+    dots.push({ x:e.clientX, y:e.clientY, life:1, r: 1 + Math.random()*1.8 });
+    if(dots.length > 60) dots.shift();
+  });
+  (function tick(){
+    tctx.clearRect(0,0,trail.width,trail.height);
+    dots.forEach(d=>{
+      d.life -= .03;
+      if(d.life <= 0) return;
+      tctx.beginPath();
+      tctx.arc(d.x, d.y, d.r * d.life, 0, 7);
+      tctx.fillStyle = `rgba(28,36,64,${.35 * d.life})`;
+      tctx.fill();
+    });
+    dots = dots.filter(d=> d.life > 0);
+    requestAnimationFrame(tick);
+  })();
+
+  /* ---------- gentle page tilt following the mouse (the page breathes) ---------- */
+  if(!reduceMotion && matchMedia('(pointer:fine)').matches){
+    let raf = null;
+    addEventListener('mousemove', e=>{
+      if(raf) return;
+      raf = requestAnimationFrame(()=>{
+        const rx = (e.clientX / innerWidth  - .5);
+        const ry = (e.clientY / innerHeight - .5);
+        page.style.transform = `rotate(${-0.35 + rx * .35}deg) translate(${rx*4}px, ${ry*3}px)`;
+        raf = null;
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
